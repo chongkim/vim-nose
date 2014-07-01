@@ -32,12 +32,10 @@ endfunction
 
 function! NoseRunNearestTest()
   let pos = getpos(".")
-  let old_reg = @@
-  execute "normal! ?^\\s*def \<cr>wwyw"
-  let funcname = @@
-  execute "normal! ?^\\s*class \<cr>wyw"
-  let classname = @@
-  let @@ = old_reg
+  call search("\\s*def .", "be")
+  let funcname = expand("<cword>")
+  call search("\\s*class .", "be")
+  let classname = expand("<cword>")
   call setpos('.', pos)
   if NoseInTestFile()
     let l:test = @% . ":" . classname . "." . funcname
