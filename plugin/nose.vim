@@ -31,12 +31,15 @@ function! NoseRunCurrentTestFile()
 endfunction
 
 function! NoseRunNearestTest()
+  let curline = line(".")
+  let curcol = col(".")
   let old_reg = @@
-  execute "normal! ?^\\s*def \<cr>wwviwy"
+  execute "normal! ?^\\s*def \<cr>wwyw"
   let funcname = @@
-  execute "normal! ?^\\s*class \<cr>wviwy"
+  execute "normal! ?^\\s*class \<cr>wyw"
   let classname = @@
   let @@ = old_reg
+  call cursor(curline, curcol)
   if NoseInTestFile()
     let l:test = @% . ":" . classname . "." . funcname
     call NoseSetLastTestCommand(l:test)
