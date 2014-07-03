@@ -4,13 +4,15 @@ if !exists("g:nose_runner")
   let g:nose_runner = "os_x_terminal"
 endif
 
-if !exists("g:nose_command")
-  let s:cmd = "nosetests -s --with-specplugin {test}"
+if !exists("g:nose_vimcommand")
+  if !exists("g:nose_command")
+    let g:nose_command = "nosetests {test}"
+  endif
 
   if has("gui_running") && has("gui_macvim")
-    let g:nose_command = "silent !" . s:plugin_path . "/bin/" . g:nose_runner . " '" . s:cmd . "'"
+    let g:nose_vimcommand = "silent !" . s:plugin_path . "/bin/" . g:nose_runner . " " . shellescape(g:nose_command)
   else
-    let g:nose_command = "!clear && echo " . s:cmd . " && " . s:cmd
+    let g:nose_vimcommand = "!clear && echo " . g:nose_command . " && " . g:nose_command
   endif
 endif
 
@@ -65,5 +67,5 @@ function! NoseUnsetLastTestCommand()
 endfunction
 
 function! NoseRunTests(test)
-  execute substitute(g:nose_command, "{test}", a:test, "g")
+  execute substitute(g:nose_vimcommand, "{test}", a:test, "g")
 endfunction
