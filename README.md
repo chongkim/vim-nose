@@ -30,26 +30,28 @@ map <Leader>ra :call NoseRunAllTests()<CR>
 
 ### Custom command
 
-Overwrite the `g:nose_command` variable to execute a custom command.
+Overwrite the `g:nose_command` variable to run a custom command.
 
 Example:
 
 ```vim
-let g:nose_command = "!nosetests -s --with-specplugin {test}"
+let g:nose_command = "nosetests -s --with-specplugin {test}"
 ```
 
-This `g:nose_command` variable can be used to support any number of test
+You can also overwrite the `g:nose_vimcommand`, which will execute any vim command.
+
+This `g:nose_vimcommand` variable can be used to support any number of test
 runners or pre-loaders. For example, to use
 [Dispatch](https://github.com/tpope/vim-dispatch):
 
 ```vim
-let g:rspec_command = "Dispatch nosetests {test}"
+let g:rspec_vimcommand = "Dispatch nosetests {test}"
 ```
 Or, [Dispatch](https://github.com/tpope/vim-dispatch) and
 [Zeus](https://github.com/burke/zeus) together:
 
 ```vim
-let g:nose_command = "compiler nosetests | set makeprg=zeus | Make nosetests {test}"
+let g:nose_vimcommand = "compiler nosetests | set makeprg=zeus | Make nosetests {test}"
 ```
 
 ### Custom runners
